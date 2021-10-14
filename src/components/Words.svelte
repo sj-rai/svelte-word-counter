@@ -1,10 +1,11 @@
 <script lang="ts">
-import { onMount } from "svelte";
+    import { onMount } from "svelte";
 
     import * as wordsJson from "../static/words.english.json";
+    import Caret from "./Caret.svelte";
 	export let name: string;
-    export let keyItems: Array = [];
-    export let totalWords: integer = 10;
+    export let keyItems: number[] = [];
+    export let totalWords: number = 10;
 
     onMount(() => {
         for (let i = 0; i < totalWords; i++) {
@@ -17,6 +18,7 @@ import { onMount } from "svelte";
 </script>
 
 <main>
+    <Caret />
 	<!-- <h1>words here</h1> -->
     <!-- <h2>{wordsJson.words[keyItem]}</h2> -->
     {#each keyItems as keyItem}
