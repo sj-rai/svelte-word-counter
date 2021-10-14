@@ -3,17 +3,25 @@ import { onMount } from "svelte";
 
     import * as wordsJson from "../static/words.english.json";
 	export let name: string;
-    export let keyItem: integer;
+    export let keyItems: Array = [];
+    export let totalWords: integer = 10;
 
     onMount(() => {
-		keyItem = Math.floor(Math.random() * (200 - 0 + 1) + 0)
+        for (let i = 0; i < totalWords; i++) {
+            // keyItems.push(Math.floor(Math.random() * (200 - 0 + 1) + 0))
+            keyItems = [...keyItems, Math.floor(Math.random() * (200 - 0 + 1) + 0)];
+        }
+        console.log('[keyItems]', keyItems)
         // console.log('[key]', key)
 	});
 </script>
 
 <main>
-	<h1>words here</h1>
-    <h2>{wordsJson.words[keyItem]}</h2>
+	<!-- <h1>words here</h1> -->
+    <!-- <h2>{wordsJson.words[keyItem]}</h2> -->
+    {#each keyItems as keyItem}
+        <h2>{wordsJson.words[keyItem]}</h2>
+    {/each}
 </main>
 
 <style>
@@ -30,6 +38,13 @@ import { onMount } from "svelte";
 		font-size: 4em;
 		font-weight: 100;
 	}
+
+    h2, h3 {
+        color: #ff3e00;
+		text-transform: lowercase;
+		font-size: 2em;
+		font-weight: 200;
+    }
 
 	@media (min-width: 640px) {
 		main {
