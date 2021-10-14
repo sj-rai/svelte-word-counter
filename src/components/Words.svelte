@@ -21,9 +21,11 @@
     <Caret />
 	<!-- <h1>words here</h1> -->
     <!-- <h2>{wordsJson.words[keyItem]}</h2> -->
-    {#each keyItems as keyItem}
-        <h2>{wordsJson.words[keyItem]}</h2>
-    {/each}
+    <div class="all-words">
+        {#each keyItems as keyItem}
+            <h3>{wordsJson.words[keyItem]}</h3>
+        {/each}
+    </div>
 </main>
 
 <style>
@@ -46,6 +48,10 @@
 		text-transform: lowercase;
 		font-size: 2em;
 		font-weight: 200;
+    }
+    .all-words {
+        display: flex;
+        justify-content: space-between;
     }
 
 	@media (min-width: 640px) {

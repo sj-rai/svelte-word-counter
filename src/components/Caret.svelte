@@ -10,7 +10,7 @@
         width: 2px;
         height: 1.5rem;
         /* position: absolute; */
-        background: red;
+        background: #ff3e00;
         /* background-color: red; */
         border-radius: 10px;
     }
