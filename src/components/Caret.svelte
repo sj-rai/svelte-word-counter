@@ -1,19 +1,20 @@
 <script lang="ts">
+    let caretMove = false
     export const move = (): void => {
-        document.getElementById("caret").animate(
-        {
-            // top: firstLetter.offsetTop - $(firstLetter).height() / 4,
-            // left: firstLetter.offsetLeft,
-            top: '10px',
-            left: '10px',
-        },
-        0,
-        // "linear"
-        )
+        caretMove = true;
+        // document.getElementById("caret").animate([
+        // // keyframes
+        // { transform: 'translateX(0px)' },
+        // { transform: 'translateX(10px)' }
+        // ], {
+        // // timing options
+        // duration: 150,
+        // iterations: 1
+        // })
     }
 </script>
 
-<div id="caret">
+<div id="caret" class:caretMove >
 </div>
 
 <style>
@@ -36,6 +37,23 @@
         }
         50% {
             opacity: 1;
+        }
+    }
+
+    .caretMove {
+        animation-name: moveAnimate !important; /* to override the #caret, !important*/
+        animation-duration: 150;
+        animation-iteration-count: 1;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes moveAnimate {
+        from {
+            transform: translateX(0px)
+        }
+        to {
+            transform: translateX(10px)
         }
     }
 </style>
