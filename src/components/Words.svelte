@@ -3,10 +3,11 @@
 
     import * as wordsJson from "../static/words.english.json";
     import Caret from "./Caret.svelte";
-	// export let name: string;
+    let caretInstance: Caret = null;
     export let keyItems: number[] = [];
     export let totalWords: number = 10;
     export let currentLetter: number|string = '', allLeters: string[] = [], currentIndex: number = 0;
+    export let pressedKeys: string[] = []
 
     onMount(() => {
         for (let i = 0; i < totalWords; i++) {
@@ -21,36 +22,41 @@
             allLeters.push(' ');
             // allLeters.push(currentWord.substring(0,1))
         })
-        console.log('[allLeters]', allLeters)
         currentLetter = allLeters[currentIndex]
         // console.log('[key]', key)
 	});
 
-    document.onkeypress = function (event) {
-        console.log('[event.keyCode]', event.keyCode)
+    document.onkeypress = function (event: KeyboardEvent) {
         if((currentLetter === event.key) || (event.keyCode === 32 && currentLetter === ' ')) {
             console.log('[correct]')
             currentLetter = moveNext()
-            console.log('[currentLetter]', currentLetter)
             // if correct, update current element
 
         } else {
             console.log('[wrong]')
         }
+        pressedKeys = [...pressedKeys, event.key]
+        caretInstance.move();
     }
 
     let moveNext = (): string => {
         currentIndex = ++currentIndex;
-        console.log('[currentIndex]', currentIndex)
         return allLeters[currentIndex];
         // return ''
     }
 </script>
 
 <main>
-    <Caret />
-	<!-- <h1>words here</h1> -->
-    <!-- <h2>{wordsJson.words[keyItem]}</h2> -->
+    <div class="caret">
+        <Caret bind:this={caretInstance}/>
+    </div>
+    <div class="all-words-pressed">
+        {#each pressedKeys as pressedKey}
+            <h3>
+                <pre>{pressedKey}</pre>
+            </h3>
+        {/each}
+    </div>
     <div class="all-words">
         {#each keyItems as keyItem}
             <h3>{wordsJson.words[keyItem]}</h3>
@@ -79,9 +85,23 @@
 		font-size: 2em;
 		font-weight: 200;
     }
+
+    /* pre {
+
+    } */
+
     .all-words {
         display: flex;
         justify-content: space-between;
+    }
+    .all-words-pressed {
+        display: flex;
+    }
+
+    .caret {
+        position: absolute;
+        top: 340px;
+        left: 38px;
     }
 
 	@media (min-width: 640px) {
