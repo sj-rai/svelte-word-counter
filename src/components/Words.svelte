@@ -15,6 +15,10 @@
         console.log('[keyItems]', keyItems)
         // console.log('[key]', key)
 	});
+
+    document.onkeypress = function (event) {
+        console.log('[event.key]', event.key)
+    }
 </script>
 
 <main>
