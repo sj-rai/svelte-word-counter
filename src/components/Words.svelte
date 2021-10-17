@@ -3,21 +3,37 @@
 
     import * as wordsJson from "../static/words.english.json";
     import Caret from "./Caret.svelte";
-	export let name: string;
+	// export let name: string;
     export let keyItems: number[] = [];
     export let totalWords: number = 10;
+    export let currentLetter: number|string = '', allLeters: string[] = [];
 
     onMount(() => {
         for (let i = 0; i < totalWords; i++) {
             // keyItems.push(Math.floor(Math.random() * (200 - 0 + 1) + 0))
             keyItems = [...keyItems, Math.floor(Math.random() * (200 - 0 + 1) + 0)];
         }
-        console.log('[keyItems]', keyItems)
+        currentLetter = wordsJson.words[keyItems[0]]?.substring(0,1)
+        keyItems.forEach((item) => {
+            let currentWord = wordsJson.words[item]
+            console.log(wordsJson.words[item])
+            for(let i = 0; i < currentWord.length; i++) {
+                allLeters.push(currentWord.substring(i,i+1))
+                console.log(`[currentWord.substring(${i},${i+1})]`, currentWord.substring(i,i+1))
+            }
+            allLeters.push(' ');
+            // allLeters.push(currentWord.substring(0,1))
+        })
+        console.log('[allLeters]', allLeters)
         // console.log('[key]', key)
 	});
 
     document.onkeypress = function (event) {
-        console.log('[event.key]', event.key)
+        if(currentLetter === event.key) {
+            console.log('[correct]')
+        } else {
+            console.log('[wrong]')
+        }
     }
 </script>
 
